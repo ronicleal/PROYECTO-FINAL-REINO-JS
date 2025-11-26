@@ -1,6 +1,10 @@
 import { groupBy } from "../utils/utils.js";
 
-
+/**
+ * Clase que representa al jugador en el juego.
+ * Contiene las estadísticas, el inventario y la lógica para calcular el poder total.
+ * @module jugadores
+ */
 export class Jugador {
     nombre;
     puntos;

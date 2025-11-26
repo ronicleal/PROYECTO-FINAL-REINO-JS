@@ -1,5 +1,10 @@
 import { EUR } from "../utils/utils.js";
 
+/**
+ * Clase que representa un producto (ítem) que puede ser comprado en el mercado.
+ * Contiene propiedades como nombre, precio, rareza, tipo de bonus y métodos para formateo y descuentos.
+ * @module producto
+ */
 export class Producto {
     /**
      * Crea una nueva instancia de Producto.
