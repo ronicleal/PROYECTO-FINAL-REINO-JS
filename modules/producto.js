@@ -1,3 +1,5 @@
+import { EUR } from "../utils/utils.js";
+
 export class Producto {
     /**
      * Crea una nueva instancia de Producto.
