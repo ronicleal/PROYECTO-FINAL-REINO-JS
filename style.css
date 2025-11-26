@@ -4,4 +4,10 @@
     padding: 0;
 }
 
+.scene{
+    display: none;
+}
 
+.scene.active{
+    display: block;
+}
