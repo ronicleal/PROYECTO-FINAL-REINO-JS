@@ -8,7 +8,12 @@ let jugador;
 let enemigos = [];
 let seleccionados = [];
 
-/*====ESCENA 1: CREAR JUGADOR ====*/
+
+/**
+ * Inicializa la Escena 1 (Creación y Estado Inicial del Jugador).
+ * Configura el evento click para crear la instancia del Jugador y mostrar sus estadísticas iniciales.
+ * @function escena1
+ */
 function escena1() {
     const btnCrear = document.getElementById("crear-jugador");
 
@@ -29,6 +34,7 @@ function escena1() {
         //Mostrar estado inicial del jugador en la misma escena
         const estadoDiv = document.getElementById("estado-jugador");
 
+        // Genera la estructura HTML de la tarjeta de estadísticas.
         estadoDiv.innerHTML = `
             <div class="stats-grid">
                 <div class="stat-box">⚔️ Ataque: ${jugador.ataqueTotal}</div>
@@ -39,12 +45,14 @@ function escena1() {
         `;
 
         let btnContinuar = document.getElementById("continuar-mercado");
+        // Verifica si el botón de continuar ya existe para no crearlo múltiples veces
         if(!btnContinuar) {
             btnContinuar = document.createElement("button");
             btnContinuar.id = "continuar-mercado";
             btnContinuar.textContent = "➡️Continuar Mercado";
             estadoDiv.appendChild(btnContinuar);
 
+            // Configura el evento para avanzar a la Escena 2 (Mercado)
             btnContinuar.addEventListener("click", () => {
                 showScene("market");
                 escena2();
