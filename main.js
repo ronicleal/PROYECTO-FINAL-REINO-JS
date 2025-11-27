@@ -70,8 +70,13 @@ function escena1() {
 
 
 
-
-/*====ESCENA 2: MOSTRAR EL MERCADO DE PRODUCTOS ====*/
+/**
+ * Inicializa y muestra la Escena 2 (Mercado de Productos).
+ * Genera un descuento aleatorio aplicable a una rareza específica,
+ * muestra las tarjetas de productos, gestiona la selección de la cesta
+ * mediante eventos click, y finaliza la compra para avanzar a la Escena 3.
+ * @function escena2
+ */
 function escena2(){
     seleccionados = [];//Lista de productos seleccionados
     const container = document.getElementById("market-container");
@@ -193,7 +198,11 @@ function escena2(){
         
     });
 
-    // === FUNCIÓN PARA MOSTRAR LOS PRODUCTOS SELECCIONADOS EN EL FOOTER ===
+    
+    /**
+     * Muestra las miniaturas de los productos seleccionados actualmente en el footer (cesta).
+     * @function mostrarSeleccionados
+     */
     function mostrarSeleccionados(){
         seleccionadosDiv.innerHTML = "";
 
