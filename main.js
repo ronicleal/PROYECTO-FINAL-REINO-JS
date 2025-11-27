@@ -18,11 +18,11 @@ let seleccionados = [];
 function escena1() {
     const btnCrear = document.getElementById("crear-jugador");
 
-    btnCrear.addEventListener("click", function() {
+    btnCrear.addEventListener("click", function () {
         const nombre = document.getElementById("nombre-jugador").value.trim();
         console.log(nombre);
 
-        if(!nombre){
+        if (!nombre) {
             alert("¡Debes introducir un nombre!")
         }
 
@@ -47,7 +47,7 @@ function escena1() {
 
         let btnContinuar = document.getElementById("continuar-mercado");
         // Verifica si el botón de continuar ya existe para no crearlo múltiples veces
-        if(!btnContinuar) {
+        if (!btnContinuar) {
             btnContinuar = document.createElement("button");
             btnContinuar.id = "continuar-mercado";
             btnContinuar.textContent = "➡️Continuar Mercado";
@@ -77,25 +77,25 @@ function escena1() {
  * mediante eventos click, y finaliza la compra para avanzar a la Escena 3.
  * @function escena2
  */
-function escena2(){
+function escena2() {
     seleccionados = [];//Lista de productos seleccionados
     const container = document.getElementById("market-container");
     container.innerHTML = "";
 
     //=== Lógica del descuento ===
-    
+
     // 1. Obtener todas las rarezas únicas
     const todasLasRarezas = obtenerTodasLasRarezas();
     // 2. Elegir una rareza aleatoria a la que aplicar el descuento
     const rarezaDescontada = todasLasRarezas[Math.floor(Math.random() * todasLasRarezas.length)];
     // 3. Generar un descuento aleatorio de 0 al 30%
-    const descuentoAleatorio = Math.floor(Math.random() * 31 );
+    const descuentoAleatorio = Math.floor(Math.random() * 31);
     // 4. Aplicar el descuento solo a los productos de esa rareza
     const mercadoDescontado = aplicarDescuentoPorRareza(rarezaDescontada, descuentoAleatorio);
 
     // 1. Contenedor de notificacion del descuento en los productos
     let notifArea = document.getElementById("notificacion-mercado");
-    if(!notifArea){
+    if (!notifArea) {
         notifArea = document.createElement("div");
         notifArea.id = "notificacion-mercado";
         //Insertar la notificacion antes del contendor de productos
@@ -121,8 +121,8 @@ function escena2(){
     console.log(`¡Descuento aplicado del ${descuentoAleatorio}% a la rareza: ${rarezaDescontada}!`);
 
     //=== Mostrar productos en tarjetas ===
-    
-    mercadoDescontado.forEach(producto =>{
+
+    mercadoDescontado.forEach(producto => {
         const card = document.createElement("div");
         card.classList.add("card-producto");
 
@@ -139,12 +139,12 @@ function escena2(){
         btnAñadir.style.marginTop = "5px";
 
         btnAñadir.addEventListener("click", () => {
-            if(!seleccionados.includes(producto)){
+            if (!seleccionados.includes(producto)) {
                 //Añadir a la cesta
                 seleccionados.push(producto);
                 card.classList.add("selected");
                 btnAñadir.textContent = "Retirar";
-            }else{
+            } else {
                 //Quitar de la cesta
                 seleccionados = seleccionados.filter(p => p !== producto);
                 card.classList.add("selected");
@@ -179,7 +179,7 @@ function escena2(){
     container.appendChild(btnComprar);
 
     btnComprar.addEventListener("click", () => {
-        if(seleccionados.length === 0){
+        if (seleccionados.length === 0) {
             alert("¡No has seleccionado ningún producto!");
             return;
         }
@@ -195,15 +195,15 @@ function escena2(){
         //Pasar a la siguiente escena después de comprar
         showScene("enemies");
         escena3();
-        
+
     });
 
-    
+
     /**
      * Muestra las miniaturas de los productos seleccionados actualmente en el footer (cesta).
      * @function mostrarSeleccionados
      */
-    function mostrarSeleccionados(){
+    function mostrarSeleccionados() {
         seleccionadosDiv.innerHTML = "";
 
         seleccionados.forEach(p => {
@@ -233,7 +233,7 @@ function escena2(){
  * Configura el botón para avanzar a la Escena 4 (Enemigos).
  * @function escena3
  */
-function escena3(){
+function escena3() {
     const cont = document.getElementById("enemies-container");
     cont.innerHTML = "";
 
@@ -256,7 +256,7 @@ function escena3(){
     estadoActual.classList.add("player-estado");
 
     // Estructura de la tarjeta de estadísticas
-    estadoActual.innerHTML= `
+    estadoActual.innerHTML = `
     <br>
     <p><strong>Nombre:</strong> ${jugador.nombre}</p>
     <br>
@@ -308,7 +308,7 @@ function escena3(){
     btnContinuarEnemigos.addEventListener("click", () => {
         escena4(); //Crear enemigos
     });
-    
+
 
 }
 
@@ -322,7 +322,7 @@ function escena3(){
  * Configura el botón para avanzar a la Escena 5 (Batalla).
  * @function escena4
  */
-function escena4(){
+function escena4() {
     //Crear enemigos
     enemigos = [
         new Enemigo("Goblin", 5, 30),
@@ -385,11 +385,164 @@ function escena4(){
 
 
 
-function escena5(){
+/**
+ * Inicializa y gestiona la Escena 5 (Batalla).
+ * Configura la interfaz para el combate entre el jugador y los enemigos predefinidos
+ * en un ciclo de turnos. Muestra las tarjetas de ambos combatientes y la zona de mensajes.
+ * Calcula los puntos ganados al derrotar a un enemigo y gestiona la transición
+ * a la siguiente batalla o a la escena final (victoria/derrota).
+ * @function escena5
+ * @requires gsap La biblioteca GSAP debe estar importada para las animaciones.
+ */
+function escena5() {
     const cont = document.getElementById("battle");
     cont.innerHTML = "";
 
-    
+    // Jugador empieza la batalla con la vida máxima recalculada
+    jugador.vida = jugador.vidaTotal;
+
+    // Copiamos los enemigos de escena 4 
+    const enemigos = [
+        new Enemigo("Goblin", 5, 30),
+        new Enemigo("Orco Guerrero", 12, 50),
+        new Enemigo("Esqueleto", 8, 40),
+        new JefeFinal("Dragón Rojo", 20, 120, "Llama Infernal", 1.5)
+    ];
+
+    let indiceActual = 0;
+
+    /**
+     * Renderiza la interfaz de la batalla actual (un enemigo vs. el jugador).
+     * @function mostrarBatalla
+     */
+    function mostrarBatalla() {
+        cont.innerHTML = "";
+
+        const enemigo = enemigos[indiceActual];
+
+        const titulo = document.createElement("h2");
+        titulo.textContent = `Batalla ${indiceActual + 1} de ${enemigos.length}`;
+        cont.appendChild(titulo);
+
+        // Contenedor de jugador y enemigo lado a lado
+        const area = document.createElement("div");
+        area.classList.add("battle-area");
+
+        //===TARJETA JUGADOR ===
+        const cardJ = document.createElement("div");
+        cardJ.classList.add("battle-card");
+
+        cardJ.innerHTML = `
+         <h3>${jugador.nombre}</h3>
+         <img src="./image/player.png">
+         <p>♥️Vida: <span id="vida-j">${jugador.vida}</span></p>
+         <p>⚔️Ataque:${jugador.ataqueTotal}</p>`;
+
+        //=== TARJETA ENEMIGO ====
+        const cardE = document.createElement("div");
+        cardE.classList.add("battle-card");
+
+        cardE.innerHTML = `
+         <h3>${enemigo.nombre}</h3>
+         <img src="${obtenerImagen(enemigo.nombre)}"
+         <p>♥️Vida: <span id="vida-e">${enemigo.vida}</span></p>
+         <p>⚔️Ataque: ${enemigo.ataque}</p>`;
+
+        area.appendChild(cardJ);
+        area.appendChild(cardE);
+        cont.appendChild(area);
+
+        // Animación GSAP simple tras añadir las tarjetas al DOM
+        gsap.from(cardJ, {
+            x: -300,    // Aparece desde la izquierda
+            opacity: 0,
+            duration: 1 // segundos
+        });
+
+        gsap.from(cardE, {
+            x: 300,     // Aparece desde la derecha
+            opacity: 0,
+            duration: 1 // segundos
+        });
+
+        //BOTÓN ATACAR
+        const btnAtacar = document.createElement("button");
+        btnAtacar.textContent = "⚔️Atacar";
+        btnAtacar.classList.add("btn-atacar");
+        cont.appendChild(btnAtacar);
+
+        //ZONA DE MENSAJES
+        const mensajes = document.createElement("div");
+        mensajes.classList.add("mensajes-batalla");
+        cont.appendChild(mensajes);
+
+        //==== LÓGICA DEL COMBATE (POR TURNOS) ===
+        btnAtacar.addEventListener("click", () => {
+            // Detener si alguien ya murió
+            if (jugador.vida <= 0 || enemigo.vida <= 0) return;
+
+            //=== Jugador Ataca ====
+            enemigo.vida -= jugador.ataqueTotal;
+            if (enemigo.vida < 0) enemigo.vida = 0;
+            document.getElementById("vida-e").textContent = enemigo.vida;
+            mensajes.innerHTML += `<p>💥 Le haces ${jugador.ataqueTotal} de daño al ${enemigo.nombre}</p>`;
+
+            if (enemigo.vida === 0) {
+                // Calcular puntos según batalla
+                const base = 100 + enemigo.ataque;
+                const multiplicador = enemigo.tipo === 'jefe'
+                    ? (enemigo.multiplicador ?? 1.5) // Si es jefe, usa su multiplicador (o 1.5 por defecto)
+                    : 1;                             // Si no es jefe, usa 1
+
+                const puntosGanados = Math.round(base * multiplicador);
+                jugador.ganarPuntos(puntosGanados);
+
+                mensajes.innerHTML += `<p>🔥 ¡Has derrotado al ${enemigo.nombre} y ganas ${puntosGanados} puntos!</p>`;
+                indiceActual++;
+
+                if (indiceActual >= enemigos.length){
+                    //Pasar a la escena final
+                    showScene("final");
+                    escena6(true);//terminar juego
+                    return;
+                }else{
+                    setTimeout(mostrarBatalla, 2000);
+                    return;
+                }
+
+            }
+
+
+            //=== Enemigo Ataca ===
+            const vidaProxima = jugador.vida + jugador.defensaTotal - enemigo.ataque;
+
+            jugador.vida = Math.max(0, vidaProxima); // Aseguramos que la vida no baje de 0
+            document.getElementById("vida-j").textContent = jugador.vida;
+            mensajes.innerHTML += `<p>💢 ${enemigo.nombre} te hace ${enemigo.ataque} de daño</p>`;
+
+            if (jugador.vida === 0) {
+                mensajes.innerHTML += `<p>☠️ ¡Has muerto!</p>`;
+                setTimeout(() => {
+                    showScene("final");
+                    escena6(false);
+                }, 2000); // pasar a escena final con derrota
+                return; // detener ejecución
+            }
+
+        });
+    }
+    // Comienza la primera batalla
+    mostrarBatalla()
+
+}
+
+
+
+
+
+
+
+function escena6(victoria){
 
 }
 
