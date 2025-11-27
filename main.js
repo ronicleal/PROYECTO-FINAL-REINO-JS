@@ -2,7 +2,7 @@
 import { Jugador } from "./modules/jugadores.js";
 import { showScene } from "./utils/utils.js";
 import { obtenerTodasLasRarezas, aplicarDescuentoPorRareza } from "./modules/mercado.js";
-import { Producto } from "./modules/producto.js";
+import { Enemigo, JefeFinal } from "./modules/enemigos.js";
 
 /*====VARIABLES GLOBALES====*/
 let jugador;
@@ -121,7 +121,7 @@ function escena2(){
     console.log(`¡Descuento aplicado del ${descuentoAleatorio}% a la rareza: ${rarezaDescontada}!`);
 
     //=== Mostrar productos en tarjetas ===
-
+    
     mercadoDescontado.forEach(producto =>{
         const card = document.createElement("div");
         card.classList.add("card-producto");
@@ -315,8 +315,80 @@ function escena3(){
 
 
 
-
+/**
+ * Inicializa la Escena 4 (Enemigos Encontrados).
+ * Crea instancias predefinidas de Enemigos y Jefes, las almacena en la variable global `enemigos`,
+ * y renderiza la información de cada enemigo en tarjetas en la interfaz.
+ * Configura el botón para avanzar a la Escena 5 (Batalla).
+ * @function escena4
+ */
 function escena4(){
+    //Crear enemigos
+    enemigos = [
+        new Enemigo("Goblin", 5, 30),
+        new Enemigo("Orco Guerrero", 12, 50),
+        new Enemigo("Esqueleto", 8, 40),
+        new JefeFinal("Dragón Rojo", 20, 120, "Llama Infernal", 1.5)
+    ];
+
+    const cont = document.getElementById("enemies-container");
+    cont.innerHTML = "";
+
+    //Titulo
+    const titulo = document.createElement("h2");
+    titulo.textContent = "Enemigos encontrados";
+    cont.appendChild(titulo);
+
+    //Contenedor
+    const listaEnemigos = document.createElement("div");
+    listaEnemigos.classList.add("lista-enemigos");
+
+    enemigos.forEach(enemigo => {
+        const card = document.createElement("div");
+        card.classList.add("card-enemigo");
+
+        const img = document.createElement("img");
+        img.src = obtenerImagen(enemigo.nombre);
+        img.alt = enemigo.nombre;
+
+        const info = document.createElement("p");
+        info.innerHTML = `
+            <strong>${enemigo.nombre}</strong><br>
+            ⚔️ Ataque: ${enemigo.ataque}<br>
+            ❤️ Vida: ${enemigo.vida}
+            `;
+
+        card.appendChild(img);
+        card.appendChild(info);
+        listaEnemigos.appendChild(card);
+
+    });
+
+    cont.appendChild(listaEnemigos);
+
+    //Boton para ir a la siguiente escena (batalla)
+    const btnContituarBatalla = document.createElement("button");
+    btnContituarBatalla.id = "continuar-batalla";
+    btnContituarBatalla.textContent = "➡️Comenzar batallas";
+    btnContituarBatalla.style.display = "block";
+    btnContituarBatalla.style.margin = "20px auto";
+
+    cont.appendChild(btnContituarBatalla);
+
+    btnContituarBatalla.addEventListener("click", () => {
+        showScene("battle");
+        escena5();//Batalla
+    });
+}
+
+
+
+
+
+function escena5(){
+    const cont = document.getElementById("battle");
+    cont.innerHTML = "";
+
     
 
 }
