@@ -67,6 +67,10 @@ function escena1() {
 }
 
 
+
+
+
+
 /*====ESCENA 2: MOSTRAR EL MERCADO DE PRODUCTOS ====*/
 function escena2(){
     seleccionados = [];//Lista de productos seleccionados
@@ -151,17 +155,74 @@ function escena2(){
         container.appendChild(card);
     });
 
-    
 
-    
+    // ==== FOOTER DONDE APARECEN LOS PRODUCTOS COMPRADOS ====
+    const footer = document.getElementById("inventory-container");
+    footer.innerHTML = "";
+
+    // Contenedor para productos seleccionados
+    const seleccionadosDiv = document.createElement("div");
+    seleccionadosDiv.id = "seleccionados-div";
+    footer.appendChild(seleccionadosDiv);
+
+    //Boton comprar
+    const btnComprar = document.createElement("button");
+    btnComprar.id = "btn-comprar";
+    btnComprar.textContent = "🛒Confirmar compra";
+    btnComprar.style.display = "block";
+    btnComprar.style.margin = "10px";
+    container.appendChild(btnComprar);
+
+    btnComprar.addEventListener("click", () => {
+        if(seleccionados.length === 0){
+            alert("¡No has seleccionado ningún producto!");
+            return;
+        }
+
+        //Agregamos los productos seleccionados por el jugador
+        seleccionados.forEach(item => jugador.añadirItem(item));
+
+        //Limpiar selección visual
+        document.querySelectorAll(".card-producto.selected").forEach(c => c.classList.remove("selected"));
+        seleccionados = [];
+        mostrarSeleccionados();
+
+        //Pasar a la siguiente escena después de comprar
+        showScene("enemies");
+        escena3();
+        
+    });
+
+    // === FUNCIÓN PARA MOSTRAR LOS PRODUCTOS SELECCIONADOS EN EL FOOTER ===
+    function mostrarSeleccionados(){
+        seleccionadosDiv.innerHTML = "";
+
+        seleccionados.forEach(p => {
+            const itemDiv = document.createElement("div");
+            itemDiv.classList.add("item");
+
+            const img = document.createElement("img");
+            img.src = obtenerImagen(p.nombre);
+            img.alt = p.nombre;
+            img.style.width = "60px"; // tamaño de miniatura
+
+            itemDiv.appendChild(img);
+            seleccionadosDiv.appendChild(itemDiv);
+
+        });
+    }
+}
 
 
 
 
 
-
+function escena3(){
 
 }
+
+
+
 
 /**
  * 
