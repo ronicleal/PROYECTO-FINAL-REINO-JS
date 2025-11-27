@@ -541,8 +541,53 @@ function escena5() {
 
 
 
-
+/**
+ * Inicializa y muestra la Escena 6 (Resultado Final).
+ * Muestra el resultado de la aventura (Victoria o Derrota),
+ * clasifica al jugador como 'Veterano' o 'Novato' en base a su puntuación final,
+ * y proporciona un botón para reiniciar el juego.
+ * @function escena6
+ * @param {boolean} victoria - Indica si el jugador completó con éxito todas las batallas (true) o si murió (false).
+ */
 function escena6(victoria){
+
+    const cont = document.getElementById("final");
+    cont.innerHTML = "";
+
+    const titulo = document.createElement("h2");
+    titulo.textContent = victoria ? "🏆 ¡Has completado la aventura!" : "💀 Has caído en batalla";
+    cont.appendChild(titulo);
+
+    // Agrupamos por nivel (Veterano/Novato) 
+    const grupos = agruparPorNivel([jugador], 300);
+
+    // Creamos el párrafo de ranking
+    const ranking = document.createElement("p");
+    ranking.classList.add("final-text");
+
+    // Solo hay un jugador, pero usamos la agrupación para definir el nivel
+    if (grupos.Veterano?.length){
+        ranking.textContent = `Jugador: ${jugador.nombre} | Puntos: ${jugador.puntos} | Nivel: Veterano🥇`;
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 }
+        });
+    }else{
+        ranking.textContent = `Jugador: ${jugador.nombre} | Puntos: ${jugador.puntos} | Nivel: Novato😢`;
+    }
+    
+    cont.appendChild(ranking);
+
+    // Botón reiniciar
+    const btnReiniciar = document.createElement("button");
+    btnReiniciar.textContent = "🔄 Reiniciar";
+    btnReiniciar.style.marginTop = "20px";
+    btnReiniciar.addEventListener("click", () => {
+        location.reload();
+    });
+
+    cont.appendChild(btnReiniciar);
 
 }
 
@@ -550,9 +595,10 @@ function escena6(victoria){
 
 
 /**
- * 
- * @param {*} nombre 
- * @returns 
+ * Función de utilidad para mapear el nombre de un ítem o enemigo a la ruta de su imagen.
+ * @function obtenerImagen
+ * @param {string} nombre - El nombre del ítem o enemigo.
+ * @returns {string} La ruta del archivo de imagen correspondiente, o una ruta por defecto si no se encuentra.
  */
 function obtenerImagen(nombre) {
     const imagenes = {
