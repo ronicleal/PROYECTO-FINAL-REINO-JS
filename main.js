@@ -226,7 +226,98 @@ function escena2(){
 
 
 
+/**
+ * Inicializa y muestra la Escena 3 (Estado Actual del Jugador).
+ * Recalcula las estadísticas del jugador con los ítems comprados
+ * y muestra el estado final (Ataque, Defensa, Vida) junto con el inventario visual.
+ * Configura el botón para avanzar a la Escena 4 (Enemigos).
+ * @function escena3
+ */
 function escena3(){
+    const cont = document.getElementById("enemies-container");
+    cont.innerHTML = "";
+
+    //Vida máxima y actual del jugador con los bonus de consumibles
+    // Se actualizan las propiedades del jugador para reflejar los ítems comprados.
+    jugador.vidaMax = jugador.vidaTotal;
+    jugador.vida = jugador.vidaMax;
+
+    //Limpiar el footer para que no quede el botón de compra
+    const footer = document.getElementById("inventory-container");
+    footer.innerHTML = "";
+
+    //Titulo del estado actual
+    const titulo = document.createElement("h2");
+    titulo.textContent = "Estado actual del jugador";
+    cont.appendChild(titulo);
+
+    //Contenedor del estado actual
+    const estadoActual = document.createElement("div");
+    estadoActual.classList.add("player-estado");
+
+    // Estructura de la tarjeta de estadísticas
+    estadoActual.innerHTML= `
+    <br>
+    <p><strong>Nombre:</strong> ${jugador.nombre}</p>
+    <br>
+    <div class="stats-grid"> 
+                <div class="stat-box">⚔️ Ataque: ${jugador.ataqueTotal}</div>
+                <div class="stat-box">🛡️ Defensa: ${jugador.defensaTotal}</div>
+                <div class="stat-box">❤️ Vida: ${jugador.vida} / ${jugador.vidaMax}</div>
+                <div class="stat-box">⭐ Inventario: ${jugador.inventario.length}</div>
+    </div>
+    `;
+
+    cont.appendChild(estadoActual);
+
+    //=== Mostrar objetos del inventario ===
+    const inventarioDiv = document.createElement("div");
+    inventarioDiv.classList.add("inventario-objetos");
+
+    jugador.inventario.forEach(obj => {
+        const caja = document.createElement("div");
+        caja.classList.add("item");
+
+        const img = document.createElement("img");
+        img.src = obtenerImagen(obj.nombre);
+        img.alt = obj.nombre;
+
+        //Usar el tipo y el bonus numérico para el tooltip (etiqueta 'title')
+        let bonusText = '';
+        if (obj.tipo === 'Arma') bonusText = `Ataque +${obj.bonus}`;
+        else if (obj.tipo === 'Armadura') bonusText = `Defensa +${obj.bonus}`;
+        else if (obj.tipo === 'Consumible') bonusText = `Curación +${obj.bonus}`;
+
+        caja.title = `${obj.nombre}\n${bonusText}`;
+        caja.appendChild(img);
+        inventarioDiv.appendChild(caja);
+    });
+
+    cont.appendChild(inventarioDiv);
+
+    // Botón para ir a la siguiente escena (enemigos)
+    const btnContinuarEnemigos = document.createElement("button");
+    btnContinuarEnemigos.id = "continuar-enemigos";
+    btnContinuarEnemigos.textContent = "➡️Continuar Enemigos";
+    btnContinuarEnemigos.style.display = "block";
+    btnContinuarEnemigos.style.margin = "20px auto";
+
+    cont.appendChild(btnContinuarEnemigos);
+
+    // Evento para avanzar a la Escena 4
+    btnContinuarEnemigos.addEventListener("click", () => {
+        escena4(); //Crear enemigos
+    });
+    
+
+}
+
+
+
+
+
+function escena4(){
+    
 
 }
 
