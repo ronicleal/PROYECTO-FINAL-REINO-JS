@@ -73,7 +73,7 @@ function escena2(){
     const container = document.getElementById("market-container");
     container.innerHTML = "";
 
-    //===Lógica del descuento===
+    //=== Lógica del descuento ===
     
     // 1. Obtener todas las rarezas únicas
     const todasLasRarezas = obtenerTodasLasRarezas();
@@ -111,7 +111,16 @@ function escena2(){
     notifArea.appendChild(notificacionDescuento);
     console.log(`¡Descuento aplicado del ${descuentoAleatorio}% a la rareza: ${rarezaDescontada}!`);
 
-    
+    //=== Mostrar productos en tarjetas ===
+
+    mercadoDescontado.forEach(producto =>{
+        const card = document.createElement("div");
+        card.classList.add("card-producto");
+
+
+
+    });
+
 
 
 
@@ -119,6 +128,39 @@ function escena2(){
 
 
 }
+
+/**
+ * 
+ * @param {*} nombre 
+ * @returns 
+ */
+function obtenerImagen(nombre) {
+    const imagenes = {
+        "Espada corta": "./image/espada.png",
+        "Arco de caza": "./image/b_t_01.png",
+        "Armadura de cuero": "./image/armor.png",
+        "Poción pequeña": "./image/hp.png",
+        "Espada rúnica": "./image/espada_runica.png",
+        "Escudo de roble": "./image/shield.png",
+        "Poción grande": "./image/pocion_grande.png",
+        "Mandoble épico": "./image/mandoble.png",
+        "Placas dracónicas": "./image/placas_draconicas.png",
+        "Elixir legendario": "./image/elixir_legendario.png",
+        "Goblin": "./image/goblin.png",
+        "Orco Guerrero": "./image/orco.png",
+        "Esqueleto": "./image/esqueleto.png",
+        "Dragón Rojo": "./image/dragon.png",
+    };
+
+    // Si no existe imagen, usa una genérica
+    return imagenes[nombre] || "./image/default.png";
+}
+
+
+
+
+
+
 
 //Inicio del juego
 escena1()
