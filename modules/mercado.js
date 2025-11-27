@@ -18,6 +18,16 @@ export const mercado = [
     new Producto('Elixir legendario', 520, 'épico', 'Consumible', 150),
 ];
 
+/**
+ * Obtiene un listado de todas las categorías de rareza únicas presentes en el mercado.
+ * @function obtenerTodasLasRarezas
+ * @returns {Array<string>} Un array de strings conteniendo todas las rarezas únicas (ej: ['común', 'raro', 'épico']).
+ */
+export function obtenerTodasLasRarezas() {
+    // Obtiene una lista única de todas las rarezas presentes en el mercado
+    return [...new Set(mercado.map(p => p.rareza))];
+}
+
 
 /**
  * Filtra el listado de productos del mercado según su rareza.

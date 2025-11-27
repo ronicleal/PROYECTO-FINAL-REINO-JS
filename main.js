@@ -68,6 +68,17 @@ function escena1() {
 
 /*====ESCENA 2: MOSTRAR EL MERCADO DE PRODUCTOS ====*/
 function escena2(){
+    seleccionados = [];//Lista de productos seleccionados
+    const container = document.getElementById("market-container");
+    container.innerHTML = "";
+
+    //===Lógica del descuento===
+    
+    // 1. Obtener todas las rarezas únicas
+    const todasLasRarezas = 
+
+
+
 
 }
 
