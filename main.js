@@ -2,7 +2,7 @@
 import { Jugador } from "./modules/jugadores.js";
 import { showScene } from "./utils/utils.js";
 import { obtenerTodasLasRarezas, aplicarDescuentoPorRareza } from "./modules/mercado.js";
-
+import { Producto } from "./modules/producto.js";
 
 /*====VARIABLES GLOBALES====*/
 let jugador;
@@ -105,7 +105,7 @@ function escena2(){
     notificacionDescuento.style.backgroundColor = "yellow";
 
     // 3. Asignar el contenido dinámico
-    notificacionDescuento.textContent = `🚨 ¡OFERTA! Descuento del 📢${descuentoFijo}%🎉 aplicado a ítems de rareza: ${rarezaDescontada.toUpperCase()} 🚨`;
+    notificacionDescuento.textContent = `🚨 ¡OFERTA! Descuento del 📢${descuentoAleatorio}%🎉 aplicado a ítems de rareza: ${rarezaDescontada.toUpperCase()} 🚨`;
 
     // 4. Insertar la notificación a su nuevo contenedor
     notifArea.appendChild(notificacionDescuento);
@@ -117,9 +117,43 @@ function escena2(){
         const card = document.createElement("div");
         card.classList.add("card-producto");
 
+        const img = document.createElement("img");
+        img.src = obtenerImagen(producto.nombre);
+        img.alt = producto.nombre;
 
+        const texto = document.createElement("p");
+        texto.textContent = producto.mostrarProducto();
 
+        //Botón añadir o quitar de la cesta
+        const btnAñadir = document.createElement("button");
+        btnAñadir.textContent = "Añadir";
+        btnAñadir.style.marginTop = "5px";
+
+        btnAñadir.addEventListener("click", () => {
+            if(!seleccionados.includes(producto)){
+                //Añadir a la cesta
+                seleccionados.push(producto);
+                card.classList.add("selected");
+                btnAñadir.textContent = "Retirar";
+            }else{
+                //Quitar de la cesta
+                seleccionados = seleccionados.filter(p => p !== producto);
+                card.classList.add("selected");
+                btnAñadir.textContent = "Añadir";
+            }
+
+            mostrarSeleccionados();
+        });
+
+        card.appendChild(img);
+        card.appendChild(texto);
+        card.appendChild(btnAñadir);
+        container.appendChild(card);
     });
+
+    
+
+    
 
 
 
