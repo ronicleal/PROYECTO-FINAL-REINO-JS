@@ -1,4 +1,66 @@
- 
+/*==================================
+  VARIABLES DE LA GUÍA DE ESTILOS
+====================================*/
+:root{
+    /* COLORES */
+    --color-primario-fondo:rgb(94, 64, 15);
+    --color-secundario-escena:rgb(218, 186, 134);
+    --color-terciario-estadisticas:rgb(194, 160, 107);
+    --color-acento-principal:rgb(208, 64, 38);
+    --color-acento-titulo: rgb(194, 210, 73);
+    --color-texto-claro:#fff;
+    --color-texto-oscuro:rgb(50, 34, 10);
+    --color-texto-general:#000;
+
+    /* UTILIDAD */
+    --color-util-pre:#222;
+    --color-util-borde-oscuro:#555;
+    --color-util-borde-exito:#4CAF50;
+
+     /* SOMBRAS */
+    --shadow-alpha-2: rgba(0,0,0,0.2);
+    --shadow-alpha-3: rgba(0,0,0,0.3);
+    --shadow-alpha-4: rgba(0,0,0,0.4);
+    --color-batalla-shadow: 0 0 10px #000;
+
+    /* TIPOGRAFÍA */
+    --familia-tipografica-primaria: Arial, sans-serif;
+    --font-size-h1: 2rem;
+    --font-size-final-p: 1.2rem;
+    --font-size-pre: 1rem;
+    --font-size-estadistica: 1.1em;
+
+    /* ESPACIADOS Y RADIOS */
+    --size-padding-20px: 20px;
+    --size-padding-10px: 10px;
+    --size-padding-8px: 8px;
+    --size-padding-5px: 5px;
+    --size-gap-15px: 15px;
+    --size-gap-10px: 10px;
+    --size-gap-20px: 20px;
+    --size-gap-40px: 40px;
+    --border-radius-10px: 10px;
+    --border-radius-8px: 8px;
+    --border-radius-5px: 5px;
+    --border-radius-6px: 6px;
+    --border-radius-12px: 12px;
+    --img-size-card-enemy: 120px;
+    
+    /* ESTADOS Y TRANSICIONES */
+    --duration-transition: 0.2s;
+    --scale-hover: 1.05;
+    --scale-selected: 1.1;
+
+}
+
+
+
+
+
+
+
+
+
 *{
     margin: 0;
     padding: 0;
