@@ -1,0 +1,27 @@
+{
+  "name": "proyecto-final-reino-js",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/ronicleal/PROYECTO-FINAL-REINO-JS#readme",
+  "bugs": {
+    "url": "https://github.com/ronicleal/PROYECTO-FINAL-REINO-JS/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ronicleal/PROYECTO-FINAL-REINO-JS.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docs": "jsdoc -c jsdoc.json"
+
+  },
+  "dependencies": {
+    "jsdoc": "^4.0.5",
+    "vite": "^7.2.4"
+  },
+  "devDependencies": {}
+}

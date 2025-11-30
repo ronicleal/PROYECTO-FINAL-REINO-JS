@@ -10,7 +10,7 @@ export class Enemigo {
     ataque;
     vida;
 
-
+    
    /**
      * Crea una nueva instancia de Enemigo.
      * @param {string} nombre - Nombre del enemigo.

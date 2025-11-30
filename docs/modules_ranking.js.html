@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: modules/ranking.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: modules/ranking.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { groupBy } from "../utils/utils.js";
+
+/**
+ * @fileoverview Módulo que gestiona la simulación del combate y el cálculo de la puntuación final/ranking.
+ * @module ranking
+ */
+
+
+/**
+ * Simula una batalla por turnos entre un jugador y un enemigo.
+ * Aplica la fórmula literal de defensa del jugador: Vida = (Vida actual + Defensa) - Ataque Enemigo.
+ * Si el jugador gana, calcula y añade los puntos obtenidos (incluyendo el multiplicador si es un Jefe).
+ * @function batalla
+ * @param {Jugador} jugador - La instancia del Jugador participante, cuya vida y puntos serán modificados.
+ * @param {Enemigo} enemigo - La instancia del Enemigo a combatir.
+ * @returns {{ganador: string, puntosGanados: number}} Objeto con el nombre del ganador y la cantidad de puntos ganados por el jugador (0 si pierde).
+ */
+export function batalla(jugador, enemigo) {
+    //=== Copiamos las vidas actuales (sin modificarlas directamente)===
+    let vidaJugador = jugador.vida;
+    let vidaEnemigo = enemigo.vida;
+
+    const ataqueJugadorTotal = jugador.ataqueTotal;
+    const ataqueEnemigo = enemigo.ataque;
+
+    //==== Los dos se atacan hasta que uno se quede sin vida =====
+    while (vidaJugador > 0 &amp;&amp; vidaEnemigo > 0) {
+        // Turno 1: Jugador ataca
+        vidaEnemigo -= ataqueJugadorTotal;
+
+        if (vidaEnemigo &lt;= 0) break;
+
+        // Turno 2: Enemigo ataca
+        // Vida del jugador = (vida actual + defensa) - ataque enemigo
+        const vidaProxima = vidaJugador + jugador.defensaTotal - ataqueEnemigo;
+
+        // Asegurar que la vida no baje de cero
+        if (vidaProxima &lt; 0) {
+            vidaJugador = 0;
+        } else {
+            vidaJugador = vidaProxima;
+        }
+    }
+
+    //====Comprobar si el jugador ganó======
+    const ganoJugador = vidaJugador > 0 &amp;&amp; vidaEnemigo &lt;= 0;
+    let puntosGanados = 0;
+
+
+    if (ganoJugador) {
+        // Calcula puntos según el poder del enemigo
+        const base = 100 + enemigo.ataque; // 100 puntos base + ataque del enemigo
+
+        // Si era un jefe, los puntos tendrán bonificación
+        let multiplicador = 1;
+
+        if (enemigo.tipo === 'jefe') {
+            // Usa el multiplicador del jefe, o 1.5 si no está definido (valor por defecto)
+            multiplicador = enemigo.multiplicador ?? 1.5;
+        }
+
+        puntosGanados = Math.round(base * multiplicador);
+        jugador.ganarPuntos(puntosGanados);
+    }
+
+    // Actualiza la vida final del jugador
+    jugador.vida = vidaJugador;
+
+    return {
+        ganador: ganoJugador ? jugador.nombre : enemigo.nombre,
+        puntosGanados,
+    };
+
+}
+
+
+
+/**
+ * Agrupa la lista de jugadores según su puntuación final para determinar su nivel.
+ * Si la puntuación es igual o superior al umbral, el jugador es 'Veterano'; de lo contrario, es 'Novato'.
+ * @function agruparPorNivel
+ * @param {Array&lt;Jugador>} jugadores - Lista de todos los jugadores al final de la partida.
+ * @param {number} [umbral=300] - Puntos mínimos requeridos para ser clasificado como 'Veterano'.
+ * @returns {Object&lt;string, Array&lt;Jugador>>} Un objeto donde las claves son 'Veterano' o 'Novato', conteniendo listas de jugadores.
+ */
+export function agruparPorNivel(jugadores, umbral = 300){
+    return groupBy(jugadores, jugador => (jugador.puntos >= umbral ? 'Veterano' : 'Novato'));
+}
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-enemigos.html">enemigos</a></li><li><a href="module-jugadores.html">jugadores</a></li><li><a href="module-producto.html">producto</a></li><li><a href="module-ranking.html">ranking</a></li></ul><h3>Classes</h3><ul><li><a href="module-enemigos.Enemigo.html">Enemigo</a></li><li><a href="module-enemigos.JefeFinal.html">JefeFinal</a></li><li><a href="module-jugadores.Jugador.html">Jugador</a></li><li><a href="module-producto.Producto.html">Producto</a></li></ul><h3>Global</h3><ul><li><a href="global.html#EUR">EUR</a></li><li><a href="global.html#aplicarDescuentoPorRareza">aplicarDescuentoPorRareza</a></li><li><a href="global.html#buscarProducto">buscarProducto</a></li><li><a href="global.html#escena1">escena1</a></li><li><a href="global.html#escena2">escena2</a></li><li><a href="global.html#escena3">escena3</a></li><li><a href="global.html#escena4">escena4</a></li><li><a href="global.html#escena5">escena5</a></li><li><a href="global.html#escena6">escena6</a></li><li><a href="global.html#filtrarPorRareza">filtrarPorRareza</a></li><li><a href="global.html#groupBy">groupBy</a></li><li><a href="global.html#mercado">mercado</a></li><li><a href="global.html#mostrarBatalla">mostrarBatalla</a></li><li><a href="global.html#mostrarSeleccionados">mostrarSeleccionados</a></li><li><a href="global.html#obtenerImagen">obtenerImagen</a></li><li><a href="global.html#obtenerTodasLasRarezas">obtenerTodasLasRarezas</a></li><li><a href="global.html#showScene">showScene</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sat Nov 29 2025 22:12:01 GMT+0100 (hora estándar de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

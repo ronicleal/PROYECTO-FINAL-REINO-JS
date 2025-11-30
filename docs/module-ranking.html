@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Module: ranking</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Module: ranking</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        
+            
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Módulo que gestiona la simulación del combate y el cálculo de la puntuación final/ranking.</div>
+        
+
+        
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="modules_ranking.js.html">modules/ranking.js</a>, <a href="modules_ranking.js.html#line3">line 3</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~agruparPorNivel"><span class="type-signature">(inner) </span>agruparPorNivel<span class="signature">(jugadores, umbral<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Object.&lt;string, Array.&lt;Jugador>>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Agrupa la lista de jugadores según su puntuación final para determinar su nivel.Si la puntuación es igual o superior al umbral, el jugador es 'Veterano'; de lo contrario, es 'Novato'.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>jugadores</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Jugador></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Lista de todos los jugadores al final de la partida.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>umbral</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    300
+                
+                </td>
+            
+
+            <td class="description last">Puntos mínimos requeridos para ser clasificado como 'Veterano'.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="modules_ranking.js.html">modules/ranking.js</a>, <a href="modules_ranking.js.html#line78">line 78</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Un objeto donde las claves son 'Veterano' o 'Novato', conteniendo listas de jugadores.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object.&lt;string, Array.&lt;Jugador>></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~batalla"><span class="type-signature">(inner) </span>batalla<span class="signature">(jugador, enemigo)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Simula una batalla por turnos entre un jugador y un enemigo.Aplica la fórmula literal de defensa del jugador: Vida = (Vida actual + Defensa) - Ataque Enemigo.Si el jugador gana, calcula y añade los puntos obtenidos (incluyendo el multiplicador si es un Jefe).
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>jugador</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Jugador</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">La instancia del Jugador participante, cuya vida y puntos serán modificados.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>enemigo</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Enemigo</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">La instancia del Enemigo a combatir.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="modules_ranking.js.html">modules/ranking.js</a>, <a href="modules_ranking.js.html#line9">line 9</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Objeto con el nombre del ganador y la cantidad de puntos ganados por el jugador (0 si pierde).
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-enemigos.html">enemigos</a></li><li><a href="module-jugadores.html">jugadores</a></li><li><a href="module-producto.html">producto</a></li><li><a href="module-ranking.html">ranking</a></li></ul><h3>Classes</h3><ul><li><a href="module-enemigos.Enemigo.html">Enemigo</a></li><li><a href="module-enemigos.JefeFinal.html">JefeFinal</a></li><li><a href="module-jugadores.Jugador.html">Jugador</a></li><li><a href="module-producto.Producto.html">Producto</a></li></ul><h3>Global</h3><ul><li><a href="global.html#EUR">EUR</a></li><li><a href="global.html#aplicarDescuentoPorRareza">aplicarDescuentoPorRareza</a></li><li><a href="global.html#buscarProducto">buscarProducto</a></li><li><a href="global.html#escena1">escena1</a></li><li><a href="global.html#escena2">escena2</a></li><li><a href="global.html#escena3">escena3</a></li><li><a href="global.html#escena4">escena4</a></li><li><a href="global.html#escena5">escena5</a></li><li><a href="global.html#escena6">escena6</a></li><li><a href="global.html#filtrarPorRareza">filtrarPorRareza</a></li><li><a href="global.html#groupBy">groupBy</a></li><li><a href="global.html#mercado">mercado</a></li><li><a href="global.html#mostrarBatalla">mostrarBatalla</a></li><li><a href="global.html#mostrarSeleccionados">mostrarSeleccionados</a></li><li><a href="global.html#obtenerImagen">obtenerImagen</a></li><li><a href="global.html#obtenerTodasLasRarezas">obtenerTodasLasRarezas</a></li><li><a href="global.html#showScene">showScene</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sat Nov 29 2025 22:12:01 GMT+0100 (hora estándar de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

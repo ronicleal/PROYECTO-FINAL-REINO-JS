@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: modules/mercado.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: modules/mercado.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Producto } from "./producto.js";
+
+/**
+ * @fileoverview Módulo que gestiona el listado predefinido de productos y las funciones del Mercado.
+ * @module mercado
+ * @constant {Array&lt;Producto>} mercado - Listado predefinido de productos disponibles en el juego.
+ */
+export const mercado = [
+    new Producto('Espada corta', 120, 'común', 'Arma', 8),
+    new Producto('Arco de caza', 140, 'común', 'Arma', 7),
+    new Producto('Armadura de cuero', 180, 'común', 'Armadura', 6),
+    new Producto('Poción pequeña', 40, 'común', 'Consumible', 20),
+    new Producto('Espada rúnica', 460, 'raro', 'Arma', 18),
+    new Producto('Escudo de roble', 320, 'raro', 'Armadura', 14),
+    new Producto('Poción grande', 110, 'raro', 'Consumible', 60),
+    new Producto('Mandoble épico', 950, 'épico', 'Arma', 32),
+    new Producto('Placas dracónicas', 880, 'épico', 'Armadura', 28),
+    new Producto('Elixir legendario', 520, 'épico', 'Consumible', 150),
+];
+
+/**
+ * Obtiene un listado de todas las categorías de rareza únicas presentes en el mercado.
+ * @function obtenerTodasLasRarezas
+ * @returns {Array&lt;string>} Un array de strings conteniendo todas las rarezas únicas (ej: ['común', 'raro', 'épico']).
+ */
+export function obtenerTodasLasRarezas() {
+    // Obtiene una lista única de todas las rarezas presentes en el mercado
+    return [...new Set(mercado.map(p => p.rareza))];
+}
+
+
+/**
+ * Filtra el listado de productos del mercado según su rareza.
+ * @function filtrarPorRareza
+ * @param {string} rareza - La rareza por la cual se desea filtrar (ej: 'raro', 'común').
+ * @returns {Array&lt;Producto>} Un nuevo array con los productos que coinciden con la rareza especificada.
+ */
+export function filtrarPorRareza(rareza) {
+  return mercado.filter(producto => producto.rareza === rareza);
+}
+
+
+/**
+ * Aplica un descuento porcentual a todos los productos que coincidan con la rareza especificada.
+ * Devuelve una nueva lista sin modificar los productos originales que no apliquen.
+ * @function aplicarDescuentoPorRareza
+ * @param {string} rareza - La rareza de los productos a los que se aplicará el descuento.
+ * @param {number} porcentaje - El porcentaje de descuento a aplicar (0-100).
+ * @returns {Array&lt;Producto>} Un nuevo array de productos con los precios actualizados donde corresponda.
+ */
+export function aplicarDescuentoPorRareza(rareza, porcentaje) {
+  return mercado.map(producto =>
+    producto.rareza === rareza ? producto.aplicarDescuento(porcentaje) : producto
+  );
+}
+
+
+/**
+ * Busca un producto en el listado del mercado por su nombre, ignorando mayúsculas y minúsculas.
+ * @function buscarProducto
+ * @param {string} nombre - El nombre del producto a buscar.
+ * @returns {Producto|null} El objeto Producto encontrado o null si no se encuentra ninguno.
+ */
+export function buscarProducto(nombre) {
+  return mercado.find(producto => producto.nombre.toLowerCase() === nombre.toLowerCase()) || null;
+}
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-enemigos.html">enemigos</a></li><li><a href="module-jugadores.html">jugadores</a></li><li><a href="module-producto.html">producto</a></li><li><a href="module-ranking.html">ranking</a></li></ul><h3>Classes</h3><ul><li><a href="module-enemigos.Enemigo.html">Enemigo</a></li><li><a href="module-enemigos.JefeFinal.html">JefeFinal</a></li><li><a href="module-jugadores.Jugador.html">Jugador</a></li><li><a href="module-producto.Producto.html">Producto</a></li></ul><h3>Global</h3><ul><li><a href="global.html#EUR">EUR</a></li><li><a href="global.html#aplicarDescuentoPorRareza">aplicarDescuentoPorRareza</a></li><li><a href="global.html#buscarProducto">buscarProducto</a></li><li><a href="global.html#escena1">escena1</a></li><li><a href="global.html#escena2">escena2</a></li><li><a href="global.html#escena3">escena3</a></li><li><a href="global.html#escena4">escena4</a></li><li><a href="global.html#escena5">escena5</a></li><li><a href="global.html#escena6">escena6</a></li><li><a href="global.html#filtrarPorRareza">filtrarPorRareza</a></li><li><a href="global.html#groupBy">groupBy</a></li><li><a href="global.html#mercado">mercado</a></li><li><a href="global.html#mostrarBatalla">mostrarBatalla</a></li><li><a href="global.html#mostrarSeleccionados">mostrarSeleccionados</a></li><li><a href="global.html#obtenerImagen">obtenerImagen</a></li><li><a href="global.html#obtenerTodasLasRarezas">obtenerTodasLasRarezas</a></li><li><a href="global.html#showScene">showScene</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sat Nov 29 2025 22:12:01 GMT+0100 (hora estándar de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
