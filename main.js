@@ -3,6 +3,8 @@ import { Jugador } from "./modules/jugadores.js";
 import { showScene } from "./utils/utils.js";
 import { obtenerTodasLasRarezas, aplicarDescuentoPorRareza } from "./modules/mercado.js";
 import { Enemigo, JefeFinal } from "./modules/enemigos.js";
+import{agruparPorNivel}from "./modules/ranking.js"
+
 
 /*====VARIABLES GLOBALES====*/
 let jugador;

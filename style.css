@@ -1,34 +1,32 @@
 /*==================================
   VARIABLES DE LA GUÍA DE ESTILOS
 ====================================*/
-:root{
+:root {
     /* COLORES */
-    --color-primario-fondo:rgb(94, 64, 15);
-    --color-secundario-escena:rgb(218, 186, 134);
-    --color-terciario-estadisticas:rgb(194, 160, 107);
-    --color-acento-principal:rgb(208, 64, 38);
-    --color-acento-titulo: rgb(194, 210, 73);
-    --color-texto-claro:#fff;
-    --color-texto-oscuro:rgb(50, 34, 10);
-    --color-texto-general:#000;
+    --color-bg-dark: rgb(94, 64, 15);/**/
+    --color-bg-scene: rgb(218, 186, 134);/**/
+    --color-accent-primary: rgb(208, 64, 38);/**/
+    --color-accent-title: rgb(194, 210, 73);/**/
+    --color-bg-stat-box: rgb(194, 160, 107);/**/
+    --color-text-dark-stat: rgb(50, 34, 10);/**/
+    --color-text-light: #fff;/**/
+    --color-text-general: #000;/**/
+    --color-bg-pre: #222;/**/
+    --color-border-dark: #555;/**/
+    --color-border-green: #4CAF50;/**/
 
-    /* UTILIDAD */
-    --color-util-pre:#222;
-    --color-util-borde-oscuro:#555;
-    --color-util-borde-exito:#4CAF50;
-
-     /* SOMBRAS */
+    /* SOMBRAS */
     --shadow-alpha-2: rgba(0,0,0,0.2);
     --shadow-alpha-3: rgba(0,0,0,0.3);
     --shadow-alpha-4: rgba(0,0,0,0.4);
-    --color-batalla-shadow: 0 0 10px #000;
+    --color-battle-shadow: 0 0 10px #000;
 
-    /* TIPOGRAFÍA */
-    --familia-tipografica-primaria: Arial, sans-serif;
-    --font-size-h1: 2rem;
+    /* TIPOGRAFÍA Y TAMAÑOS */
+    --font-family-primary: Arial, sans-serif;
+    --font-size-title: 2rem;
+    --font-size-stat-box: 1.1em;
     --font-size-final-p: 1.2rem;
     --font-size-pre: 1rem;
-    --font-size-estadistica: 1.1em;
 
     /* ESPACIADOS Y RADIOS */
     --size-padding-20px: 20px;
@@ -50,21 +48,312 @@
     --duration-transition: 0.2s;
     --scale-hover: 1.05;
     --scale-selected: 1.1;
-
 }
 
 /*==================================
-    ESTILOS GENERALES
+  ESTILOS GENERALES Y LAYOUT
 ====================================*/
-*{
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-family-primary);
+    color: var(--color-text-general);
 }
 
-.scene{
+body {
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-light);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--size-padding-20px);
+    min-height: 100vh;
+}
+#nombre-jugador-display{
+    text-align: center;
+}
+
+header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: var(--font-size-title);
+    color: var(--color-accent-title);
+}
+
+main {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.scene {
+    background-color: var(--color-bg-scene);
+    padding: var(--size-padding-20px);
+    border-radius: var(--border-radius-10px);
     display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--size-gap-15px);
 }
 
-.scene.active{
+.scene.active {
+    display: flex;
+}
+
+/* ===== PLAYER / IMAGEN ===== */
+.img-container img {
+    width: 250px;
+}
+
+/* ===== INPUT ===== */
+input#nombre-jugador {
+    padding: var(--size-padding-8px);
+    border-radius: var(--border-radius-5px);
+    border: none;
+    width: 80%;
+    max-width: 200px;
+}
+
+/* ===== TEXTO DEL JUGADOR (PRE) ===== */
+pre {
+    background-color: var(--color-bg-pre);
+    padding: var(--size-padding-10px);
+    border-radius: var(--border-radius-5px);
+    width: 100%;
+    text-align: center;
+    font-size: var(--font-size-pre);
+}
+
+/*==================================
+  COMPONENTES (BOTONES)
+====================================*/
+button,
+.btn-atacar {
+    padding: var(--size-padding-8px) var(--size-padding-20px);
+    border: none;
+    border-radius: var(--border-radius-5px);
+    background-color: var(--color-accent-primary);
+    color: var(--color-text-general); 
+    cursor: pointer;
+    transition: transform var(--duration-transition);
+}
+
+button:hover,
+.btn-atacar:hover {
+    transform: scale(var(--scale-hover));
+}
+
+button#continuar-mercado {
     display: block;
+    margin: 15px auto 0 auto;
+}
+
+#btn-comprar {
+    height: 40px;
+}
+
+
+/*==================================
+  ESCENA 1 & 3 (ESTADO Y ESTADÍSTICAS)
+====================================*/
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: var(--size-gap-15px);
+    margin-top: var(--size-padding-10px);
+}
+
+.stat-box {
+    background-color: var(--color-bg-stat-box);
+    padding: var(--size-padding-20px) var(--size-padding-10px);
+    border-radius: var(--border-radius-6px);
+    text-align: center;
+    font-weight: bold;
+    color: var(--color-text-dark-stat);
+    box-shadow: 0 2px 5px var(--shadow-alpha-3);
+    font-size: var(--font-size-stat-box); 
+}
+
+.inventory-box {
+    grid-column: 1 / 3;
+    background-color: var(--color-bg-stat-box);
+    padding: 15px var(--size-padding-10px);
+    border-radius: var(--border-radius-6px);
+    text-align: center;
+    color: var(--color-text-dark-stat); 
+    box-shadow: 0 2px 5px var(--shadow-alpha-3);
+    font-size: var(--font-size-stat-box);
+    font-weight: bold;
+}
+
+
+/*==================================
+  ESCENA 2 (MERCADO DE PRODUCTOS)
+====================================*/
+#market-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--size-gap-15px);
+    justify-content: center;
+}
+
+.card-producto {
+    flex: 0 0 150px;
+    border: 1px solid var(--color-text-general);
+    padding: var(--size-padding-10px);
+    border-radius: var(--border-radius-8px);
+    box-shadow: 0 2px 5px var(--shadow-alpha-2);
+    transition: transform var(--duration-transition);
+    background-color: var(--color-bg-dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-producto img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 5px;
+}
+
+.card-producto:hover {
+    transform: scale(var(--scale-hover));
+}
+
+.card-producto.selected {
+    background-color: var(--color-accent-primary);
+}
+
+/* Inventario Seleccionado (Footer) */
+#inventory-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--size-gap-15px);
+    justify-content: center;
+}
+#seleccionados-div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--size-gap-10px);
+    padding: var(--size-padding-10px) 0;
+}
+.item {
+    margin: 5px;
+}
+
+#seleccionados-div .item {
+    width: 60px;
+    height: 60px;
+    border: 2px solid transparent;
+    border-radius: var(--border-radius-5px);
+    transition: transform var(--duration-transition), border-color var(--duration-transition);
+}
+
+#seleccionados-div .item.selected {
+    border-color: var(--color-border-green);
+    transform: scale(var(--scale-selected));
+    box-shadow: 0 0 8px var(--shadow-alpha-3);
+}
+
+/*==================================
+  ESCENA 3 (INVENTARIO VISUAL)
+====================================*/
+.inventario-objetos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--size-gap-10px);
+    margin-top: 15px;
+}
+
+.inventario-objetos .item {
+    width: 80px;
+    height: 80px;
+    background: var(--color-bg-dark);
+    border: 2px solid var(--color-border-dark);
+    border-radius: var(--border-radius-10px);
+    display: flex;
+    justify-content: center;
+    padding: var(--size-padding-item);
+    box-shadow: 0 0 8px var(--shadow-alpha-4);
+    transition: transform var(--duration-transition);
+}
+
+.inventario-objetos .item:hover {
+    transform: scale(var(--scale-hover));
+}
+
+/*==================================
+  ESCENA 4 & 5 (ENEMIGOS Y BATALLA)
+====================================*/
+.lista-enemigos {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--size-gap-20px);
+    margin-top: var(--size-gap-20px);
+}
+
+.card-enemigo {
+    width: 180px;
+    padding: var(--size-padding-10px);
+    background: var(--color-bg-dark);
+    border: 2px solid var(--color-border-dark);
+    border-radius: var(--border-radius-10px);
+    text-align: center;
+    color: var(--color-text-light);
+    transition: transform var(--duration-transition);
+}
+
+.card-enemigo:hover {
+    transform: scale(var(--scale-hover));
+}
+
+.card-enemigo img {
+    width: var(--img-size-card-enemy);
+    height: var(--img-size-card-enemy);
+    object-fit: contain;
+}
+
+.battle-area {
+    display: flex;
+    gap: var(--size-gap-40px);
+    justify-content: center;
+    margin-top: var(--size-gap-20px);
+}
+
+.battle-card {
+    background: var(--color-bg-dark);
+    padding: var(--size-padding-20px);
+    border-radius: var(--border-radius-12px);
+    text-align: center;
+    width: 200px;
+    color: var(--color-text-light);
+    box-shadow: var(--color-battle-shadow);
+    transition: transform var(--duration-transition);
+}
+
+.battle-card:hover {
+    transform: scale(var(--scale-hover));
+}
+
+.battle-card img {
+    width: var(--img-size-card-enemy);
+    height: auto;
+}
+
+/*Resultado final*/
+
+#final p {
+    font-size: var(--font-size-final-p);
+    color: var(--color-text-light);
+    background-color: var(--color-bg-dark);
+    padding: var(--size-padding-10px) var(--size-padding-20px);
+    border-radius: var(--border-radius-10px);
+    box-shadow: 0 2px 5px var(--shadow-alpha-3);
+    text-align: center;
 }
