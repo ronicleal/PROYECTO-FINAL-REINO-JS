@@ -2,18 +2,21 @@
   VARIABLES DE LA GUÍA DE ESTILOS
 ====================================*/
 :root {
-    /* COLORES */
-    --color-bg-dark: rgb(94, 64, 15);/**/
-    --color-bg-scene: rgb(218, 186, 134);/**/
-    --color-accent-primary: rgb(208, 64, 38);/**/
-    --color-accent-title: rgb(194, 210, 73);/**/
-    --color-bg-stat-box: rgb(194, 160, 107);/**/
-    --color-text-dark-stat: rgb(50, 34, 10);/**/
-    --color-text-light: #fff;/**/
-    --color-text-general: #000;/**/
-    --color-bg-pre: #222;/**/
-    --color-border-dark: #555;/**/
-    --color-border-green: #4CAF50;/**/
+    /* PALETA DE COLORES */
+    --color-primario-fondo: rgb(94, 64, 15);       
+    --color-secundario-superficie: rgb(218, 186, 134); 
+    --color-acento-principal: rgb(208, 64, 38);      
+    --color-acento-titulo: rgb(194, 210, 73);        
+    --color-terciario-estadistica: rgb(194, 160, 107); 
+    
+    --color-texto-oscuro: rgb(50, 34, 10);         
+    --color-texto-claro: #fff;                     
+    --color-texto-general: #000;                    
+    
+    /* UTILIDAD */
+    --color-util-pre: #222;                        
+    --color-util-borde-oscuro: #555;               
+    --color-util-borde-exito: #4CAF50;            
 
     /* SOMBRAS */
     --shadow-alpha-2: rgba(0,0,0,0.2);
@@ -58,12 +61,12 @@
     padding: 0;
     box-sizing: border-box;
     font-family: var(--font-family-primary);
-    color: var(--color-text-general);
+    color: var(--color-texto-general);
 }
 
 body {
-    background-color: var(--color-bg-dark);
-    color: var(--color-text-light);
+    background-color: var(--color-primario-fondo);
+    color: var(--color-texto-claro);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -81,7 +84,7 @@ header {
 
 header h1 {
     font-size: var(--font-size-title);
-    color: var(--color-accent-title);
+    color: var(--color-acento-titulo);
 }
 
 main {
@@ -91,7 +94,7 @@ main {
 }
 
 .scene {
-    background-color: var(--color-bg-scene);
+    background-color: var(--color-secundario-superficie);
     padding: var(--size-padding-20px);
     border-radius: var(--border-radius-10px);
     display: none;
@@ -120,7 +123,7 @@ input#nombre-jugador {
 
 /* ===== TEXTO DEL JUGADOR (PRE) ===== */
 pre {
-    background-color: var(--color-bg-pre);
+    background-color: var(--color-util-pre);
     padding: var(--size-padding-10px);
     border-radius: var(--border-radius-5px);
     width: 100%;
@@ -136,8 +139,8 @@ button,
     padding: var(--size-padding-8px) var(--size-padding-20px);
     border: none;
     border-radius: var(--border-radius-5px);
-    background-color: var(--color-accent-primary);
-    color: var(--color-text-general); 
+    background-color: var(--color-acento-principal);
+    color: var(--color-texto-general); 
     cursor: pointer;
     transition: transform var(--duration-transition);
 }
@@ -168,23 +171,23 @@ button#continuar-mercado {
 }
 
 .stat-box {
-    background-color: var(--color-bg-stat-box);
+    background-color: var(--color-terciario-estadistica);
     padding: var(--size-padding-20px) var(--size-padding-10px);
     border-radius: var(--border-radius-6px);
     text-align: center;
     font-weight: bold;
-    color: var(--color-text-dark-stat);
+    color: var(--color-texto-oscuro);
     box-shadow: 0 2px 5px var(--shadow-alpha-3);
     font-size: var(--font-size-stat-box); 
 }
 
 .inventory-box {
     grid-column: 1 / 3;
-    background-color: var(--color-bg-stat-box);
+    background-color: var(--color-terciario-estadistica);
     padding: 15px var(--size-padding-10px);
     border-radius: var(--border-radius-6px);
     text-align: center;
-    color: var(--color-text-dark-stat); 
+    color: var(--color-texto-oscuro); 
     box-shadow: 0 2px 5px var(--shadow-alpha-3);
     font-size: var(--font-size-stat-box);
     font-weight: bold;
@@ -203,12 +206,12 @@ button#continuar-mercado {
 
 .card-producto {
     flex: 0 0 150px;
-    border: 1px solid var(--color-text-general);
+    border: 1px solid var(--color-texto-general);
     padding: var(--size-padding-10px);
     border-radius: var(--border-radius-8px);
     box-shadow: 0 2px 5px var(--shadow-alpha-2);
     transition: transform var(--duration-transition);
-    background-color: var(--color-bg-dark);
+    background-color: var(--color-primario-fondo);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -226,7 +229,7 @@ button#continuar-mercado {
 }
 
 .card-producto.selected {
-    background-color: var(--color-accent-primary);
+    background-color: var(--color-acento-principal);
 }
 
 /* Inventario Seleccionado (Footer) */
@@ -255,7 +258,7 @@ button#continuar-mercado {
 }
 
 #seleccionados-div .item.selected {
-    border-color: var(--color-border-green);
+    border-color: var(--color-util-borde-exito);
     transform: scale(var(--scale-selected));
     box-shadow: 0 0 8px var(--shadow-alpha-3);
 }
@@ -273,12 +276,12 @@ button#continuar-mercado {
 .inventario-objetos .item {
     width: 80px;
     height: 80px;
-    background: var(--color-bg-dark);
-    border: 2px solid var(--color-border-dark);
+    background: var(--color-primario-fondo);
+    border: 2px solid var(--color-util-borde-oscuro);
     border-radius: var(--border-radius-10px);
     display: flex;
     justify-content: center;
-    padding: var(--size-padding-item);
+    padding: var(--size-padding-5px);
     box-shadow: 0 0 8px var(--shadow-alpha-4);
     transition: transform var(--duration-transition);
 }
@@ -301,11 +304,11 @@ button#continuar-mercado {
 .card-enemigo {
     width: 180px;
     padding: var(--size-padding-10px);
-    background: var(--color-bg-dark);
-    border: 2px solid var(--color-border-dark);
+    background: var(--color-primario-fondo);
+    border: 2px solid var(--color-util-borde-oscuro);
     border-radius: var(--border-radius-10px);
     text-align: center;
-    color: var(--color-text-light);
+    color: var(--color-texto-claro);
     transition: transform var(--duration-transition);
 }
 
@@ -327,12 +330,12 @@ button#continuar-mercado {
 }
 
 .battle-card {
-    background: var(--color-bg-dark);
+    background: var(--color-primario-fondo);
     padding: var(--size-padding-20px);
     border-radius: var(--border-radius-12px);
     text-align: center;
     width: 200px;
-    color: var(--color-text-light);
+    color: var(--color-texto-claro);
     box-shadow: var(--color-battle-shadow);
     transition: transform var(--duration-transition);
 }
@@ -350,8 +353,8 @@ button#continuar-mercado {
 
 #final p {
     font-size: var(--font-size-final-p);
-    color: var(--color-text-light);
-    background-color: var(--color-bg-dark);
+    color: var(--color-texto-claro);
+    background-color: var(--color-primario-fondo);
     padding: var(--size-padding-10px) var(--size-padding-20px);
     border-radius: var(--border-radius-10px);
     box-shadow: 0 2px 5px var(--shadow-alpha-3);
