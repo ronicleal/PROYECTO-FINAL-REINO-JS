@@ -360,3 +360,90 @@ button#continuar-mercado {
     box-shadow: 0 2px 5px var(--shadow-alpha-3);
     text-align: center;
 }
+
+/*==================================
+  ADAPTACIÓN: DISPOSITIVOS MÓVILES (360px)
+====================================*/
+@media (max-width: 599px) {
+    
+    /* 1. LAYOUT PRINCIPAL */
+    body {
+        padding: var(--size-padding-10px); /* Reducir padding general */
+    }
+    
+    .scene {
+        padding: var(--size-padding-10px);
+        width: 100%;
+        max-width: 100%;
+    }
+
+    /* 2. ESTADÍSTICAS (Escenas 1 & 3) */
+    .stats-grid {
+        /* Mantiene 2 columnas, pero los hace más pequeños */
+        gap: var(--size-gap-10px);
+    }
+    
+    .stat-box, .inventory-box {
+        font-size: 1em; /* Ligeramente más pequeño para caber */
+        padding: 15px 5px;
+    }
+
+    /* 3. MERCADO (Escena 2) */
+    #market-container {
+        /* Permite que las tarjetas se apilen verticalmente si no caben */
+        justify-content: space-around; 
+        gap: var(--size-gap-10px);
+    }
+    
+    .card-producto {
+        /* Aseguramos que quepan 2 tarjetas por fila en 360px */
+        flex: 0 0 45%; 
+        min-width: 140px; 
+        padding: var(--size-padding-5px);
+    }
+
+    /* 4. BATALLA (Escena 5) */
+    .battle-area {
+        /* Pasa de lado a lado a apilarse verticalmente */
+        flex-direction: column;
+        align-items: center;
+        gap: var(--size-gap-20px);
+    }
+    
+    .battle-card {
+        width: 95%; /* Ocupa casi todo el ancho */
+        padding: var(--size-padding-10px);
+    }
+    
+    .card-enemigo, .card-enemigo img {
+        width: 100%; /* Las tarjetas de enemigo se hacen flexibles */
+    }
+}
+
+
+
+
+/*==================================
+  ADAPTACIÓN: TABLETS (720px)
+====================================*/
+@media (min-width: 600px) and (max-width: 999px) {
+    
+    /* Mantiene 3-4 columnas de productos si es posible */
+    #market-container {
+        gap: var(--size-gap-15px);
+    }
+
+    /* Las estadísticas pueden expandirse */
+    .stats-grid {
+        width: 80%;
+        max-width: 500px;
+    }
+    
+    /* Aseguramos que las tarjetas de batalla mantengan su separación horizontal */
+    .battle-area {
+        gap: var(--size-gap-20px);
+    }
+}
+
+
+
