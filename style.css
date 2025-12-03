@@ -337,7 +337,7 @@ button#continuar-mercado {
     width: 200px;
     color: var(--color-texto-claro);
     box-shadow: var(--color-battle-shadow);
-    transition: transform var(--duration-transition);
+    transition: transform 1s ease-out, opacity 1s ease-out;
 }
 
 .battle-card:hover {
@@ -347,6 +347,20 @@ button#continuar-mercado {
 .battle-card img {
     width: var(--img-size-card-enemy);
     height: auto;
+}
+
+ /*MOVIMIENTO DE LAS TARJETAS */
+ .battle-card.player {
+    transform: translateX(-100vw); /* Posición inicial: fuera a la izquierda */
+}
+
+.battle-card.enemy {
+    transform: translateX(100vw); /* Posición inicial: fuera a la derecha */
+}
+
+.battle-card.animate-in {
+    transform: translateX(0); /* Vuelve a la posición original */
+    opacity: 1; /* Se hace visible */
 }
 
 /*Resultado final*/

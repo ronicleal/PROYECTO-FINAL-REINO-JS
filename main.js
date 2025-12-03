@@ -432,7 +432,7 @@ function escena5() {
 
         //===TARJETA JUGADOR ===
         const cardJ = document.createElement("div");
-        cardJ.classList.add("battle-card");
+        cardJ.classList.add("battle-card", "player");
 
         cardJ.innerHTML = `
          <h3>${jugador.nombre}</h3>
@@ -442,7 +442,7 @@ function escena5() {
 
         //=== TARJETA ENEMIGO ====
         const cardE = document.createElement("div");
-        cardE.classList.add("battle-card");
+        cardE.classList.add("battle-card", "enemy");
 
         cardE.innerHTML = `
          <h3>${enemigo.nombre}</h3>
@@ -454,19 +454,12 @@ function escena5() {
         area.appendChild(cardE);
         cont.appendChild(area);
 
-        // Animación GSAP simple tras añadir las tarjetas al DOM
-        gsap.from(cardJ, {
-            x: -300,    // Aparece desde la izquierda
-            opacity: 0,
-            duration: 1 // segundos
-        });
+         setTimeout(() => {
+            cardJ.classList.add('animate-in');
+            cardE.classList.add('animate-in');
+        }, 10); // Retraso mínimo
 
-        gsap.from(cardE, {
-            x: 300,     // Aparece desde la derecha
-            opacity: 0,
-            duration: 1 // segundos
-        });
-
+        
         //BOTÓN ATACAR
         const btnAtacar = document.createElement("button");
         btnAtacar.textContent = "⚔️Atacar";
