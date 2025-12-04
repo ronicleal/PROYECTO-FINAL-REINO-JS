@@ -3,7 +3,7 @@ import { Jugador } from "./modules/jugadores.js";
 import { showScene } from "./utils/utils.js";
 import { obtenerTodasLasRarezas, aplicarDescuentoPorRareza } from "./modules/mercado.js";
 import { Enemigo, JefeFinal } from "./modules/enemigos.js";
-import{agruparPorNivel}from "./modules/ranking.js"
+import { agruparPorNivel } from "./modules/ranking.js"
 
 
 /*====VARIABLES GLOBALES====*/
@@ -22,7 +22,15 @@ function escena1() {
 
     btnCrear.addEventListener("click", function () {
         const nombre = document.getElementById("nombre-jugador").value.trim();
+        const ataqueJugador = document.getElementById("ataque-jugador").value;
+        const defensaJugador = document.getElementById("defensa-jugador").value;
+        const vidaJugador = document.getElementById("vida-jugador").value;
+
+
         console.log(nombre);
+        console.log(ataqueJugador);
+        console.log(defensaJugador);
+        console.log(vidaJugador);
 
         if (!nombre) {
             alert("¡Debes introducir un nombre!")
@@ -30,6 +38,7 @@ function escena1() {
 
         //Crear jugador
         jugador = new Jugador(nombre);
+
 
         //Mostrar el nombre en el DOM
         document.getElementById("nombre-jugador-display").textContent = jugador.nombre;
@@ -40,9 +49,9 @@ function escena1() {
         // Genera la estructura HTML de la tarjeta de estadísticas.
         estadoDiv.innerHTML = `
             <div class="stats-grid">
-                <div class="stat-box">⚔️ Ataque: ${jugador.ataqueTotal}</div>
-                <div class="stat-box">🛡️ Defensa: ${jugador.defensaTotal}</div>
-                <div class="stat-box">❤️ Vida: ${jugador.vida} / ${jugador.vidaMax}</div>
+                <div class="stat-box">⚔️ Ataque: ${ataqueJugador}</div>
+                <div class="stat-box">🛡️ Defensa: ${defensaJugador}</div>
+                <div class="stat-box">❤️ Vida: ${vidaJugador}</div>
                 <div class="stat-box">⭐ Puntos: ${jugador.puntos}</div>
             </div>
         `;
@@ -186,17 +195,37 @@ function escena2() {
             return;
         }
 
-        //Agregamos los productos seleccionados por el jugador
-        seleccionados.forEach(item => jugador.añadirItem(item));
+        //Calcular coste total
+        let costeTotal = 0;
 
-        //Limpiar selección visual
-        document.querySelectorAll(".card-producto.selected").forEach(c => c.classList.remove("selected"));
-        seleccionados = [];
-        mostrarSeleccionados();
+        for (const item of seleccionados) {
+            costeTotal += item.precio
 
-        //Pasar a la siguiente escena después de comprar
-        showScene("enemies");
-        escena3();
+        }
+
+        if (jugador.gastarDinero(costeTotal)) {
+            //Agregamos los productos seleccionados por el jugador
+            seleccionados.forEach(item => jugador.añadirItem(item));
+
+            //Limpiar selección visual
+            document.querySelectorAll(".card-producto.selected").forEach(c => c.classList.remove("selected"));
+            seleccionados = [];
+            mostrarSeleccionados();
+
+            //Pasar a la siguiente escena después de comprar
+            showScene("enemies");
+            escena3();
+        }else{
+            alert(`¡No tienes suficiente dinero para comprar, costo ${costeTotal} € y tienes ${jugador.dinero} €`)
+        }
+
+
+
+
+
+
+
+
 
     });
 
@@ -261,6 +290,7 @@ function escena3() {
     estadoActual.innerHTML = `
     <br>
     <p><strong>Nombre:</strong> ${jugador.nombre}</p>
+    <p><strong>Dinero:</strong> ${jugador.dinero}</p>
     <br>
     <div class="stats-grid"> 
                 <div class="stat-box">⚔️ Ataque: ${jugador.ataqueTotal}</div>
@@ -454,12 +484,12 @@ function escena5() {
         area.appendChild(cardE);
         cont.appendChild(area);
 
-         setTimeout(() => {
+        setTimeout(() => {
             cardJ.classList.add('animate-in');
             cardE.classList.add('animate-in');
         }, 10); // Retraso mínimo
 
-        
+
         //BOTÓN ATACAR
         const btnAtacar = document.createElement("button");
         btnAtacar.textContent = "⚔️Atacar";
@@ -495,12 +525,12 @@ function escena5() {
                 mensajes.innerHTML += `<p>🔥 ¡Has derrotado al ${enemigo.nombre} y ganas ${puntosGanados} puntos!</p>`;
                 indiceActual++;
 
-                if (indiceActual >= enemigos.length){
+                if (indiceActual >= enemigos.length) {
                     //Pasar a la escena final
                     showScene("final");
                     escena6(true);//terminar juego
                     return;
-                }else{
+                } else {
                     setTimeout(mostrarBatalla, 2000);
                     return;
                 }
@@ -544,7 +574,7 @@ function escena5() {
  * @function escena6
  * @param {boolean} victoria - Indica si el jugador completó con éxito todas las batallas (true) o si murió (false).
  */
-function escena6(victoria){
+function escena6(victoria) {
 
     const cont = document.getElementById("final");
     cont.innerHTML = "";
@@ -561,17 +591,17 @@ function escena6(victoria){
     ranking.classList.add("final-text");
 
     // Solo hay un jugador, pero usamos la agrupación para definir el nivel
-    if (grupos.Veterano?.length){
-        ranking.textContent = `Jugador: ${jugador.nombre} | Puntos: ${jugador.puntos} | Nivel: Veterano🥇`;
+    if (grupos.Veterano?.length) {
+        ranking.textContent = `Jugador: ${jugador.nombre} | Puntos: ${jugador.puntos} | Nivel: Veterano🥇 | Monedas Ganadas: ${jugador.dinero}`;
         confetti({
             particleCount: 100,
             spread: 70,
             origin: { y: 0.6 }
         });
-    }else{
+    } else {
         ranking.textContent = `Jugador: ${jugador.nombre} | Puntos: ${jugador.puntos} | Nivel: Novato😢`;
     }
-    
+
     cont.appendChild(ranking);
 
     // Botón reiniciar

@@ -11,18 +11,20 @@ export class Jugador {
     inventario;
     vidaMax;
     vida;
+    dinero;
 
     /**
     * Crea una nueva instancia de Jugador.
     * @param {string} nombre - Nombre del jugador.
     */
-    constructor(nombre, avatar = './imagenes/player.png') {
+    constructor(nombre, avatar = './imagenes/player.png', dineroInicial= 500) {
         this.nombre = nombre;
         this.avatar = avatar;
         this.puntos = 0;
         this.inventario = [];
         this.vidaMax = 100;
         this.vida = this.vidaMax;
+        this.dinero = dineroInicial;
     }
 
     /**
@@ -41,6 +43,16 @@ export class Jugador {
     */
     ganarPuntos(cantidad) {
         this.puntos += cantidad;
+    }
+
+    gastarDinero(cantidad){
+        if(this.dinero >= cantidad){
+            this.dinero -= cantidad;
+            return true
+        }
+
+        return false
+
     }
 
     /**

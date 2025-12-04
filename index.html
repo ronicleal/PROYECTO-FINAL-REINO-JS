@@ -27,9 +27,16 @@
                 <p id="nombre-jugador-display">Nombre del personaje</p>
                
             </div>
-            <input id="nombre-jugador" placeholder="Introduce el nombre">
+
+           
+            <input type="text" id="nombre-jugador" minlength="20" placeholder="Introduce el nombre">
+            <input type="number" id="ataque-jugador"  placeholder="Ataque" required >
+            <input type="number" id="defensa-jugador" placeholder="Defensa" required>
+            <input type="number" id="vida-jugador" min="100" placeholder="Vida" required>
+           
 
             <button id="crear-jugador">Crear Jugador</button>
+
 
             <div id="estado-jugador" class="player-card"></div>
         </div>
